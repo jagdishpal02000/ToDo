@@ -124,7 +124,7 @@ function IncompleteTask({
   return (
     <>
       <section className="incomp-task">
-        <h2>Tasks To Do</h2>
+        <h2>tasks To Do</h2>
         <hr />
         {incompletedTasks.map((task) => {
           return (
