@@ -18,7 +18,6 @@ function App() {
     getStoredIncompletedTasks || []
   );
   const currentTask = useRef(null);
-  const searchInput = useRef(null);
   const [error, setError] = useState(false);
   const deleteCompletedTask = (Task) => {
     const newTasks = completedTasks.filter((task) => Task !== task);
@@ -69,8 +68,6 @@ function App() {
     const newIncompletedTasks = getStoredIncompletedTasks.filter((task) =>
       task.toLowerCase().includes(searchingKey)
     );
-    // console.log(incompletedTasks);
-    // console.log(newIncompletedTasks);
 
     setIncompletedTasks(newIncompletedTasks);
   }, 300);
