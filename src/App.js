@@ -115,7 +115,8 @@ function App() {
           }}
         />
       </div>
-      <SearchTodo />
+      {getStoredIncompletedTasks.length ? <SearchTodo /> : null}
+
       <main className="app">
         <IncompleteTask
           className="container2"
