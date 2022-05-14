@@ -1,5 +1,6 @@
 import { BsFillArrowDownCircleFill } from "react-icons/bs";
 import { BsFillArchiveFill, BsCheckCircleFill } from "react-icons/bs";
+import SearchIcon from "@mui/icons-material/Search";
 import { useState, useRef } from "react";
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
     getStoredIncompletedTasks || []
   );
   const currentTask = useRef(null);
+  const searchInput = useRef(null);
   const [error, setError] = useState(false);
   const deleteCompletedTask = (Task) => {
     const newTasks = completedTasks.filter((task) => Task !== task);
@@ -51,6 +53,48 @@ function App() {
       }, 5000);
     }
   };
+  const debounce = (func, delay) => {
+    let debounceTimer;
+    return function () {
+      const context = this;
+      const args = arguments;
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => func.apply(context, args), delay);
+    };
+  };
+
+  const update = debounce(function (e) {
+    console.log(e.target.value);
+    const searchingKey = e.target.value.toLowerCase();
+    const newIncompletedTasks = getStoredIncompletedTasks.filter((task) =>
+      task.toLowerCase().includes(searchingKey)
+    );
+    // console.log(incompletedTasks);
+    // console.log(newIncompletedTasks);
+
+    setIncompletedTasks(newIncompletedTasks);
+  }, 300);
+
+  const [sInput, setSInput] = useState("");
+  function SearchTodo() {
+    return (
+      <>
+        <div className="searchbar">
+          <input
+            type="text"
+            value={sInput}
+            onChange={(e) => {
+              setSInput(e.target.value);
+              update(e);
+            }}
+            placeholder="Search tasks"
+            autoFocus
+          />
+          <SearchIcon className="search-icon" />
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
@@ -74,6 +118,7 @@ function App() {
           }}
         />
       </div>
+      <SearchTodo />
       <main className="app">
         <IncompleteTask
           className="container2"
